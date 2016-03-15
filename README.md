@@ -1,3 +1,3 @@
-# YoutubeClone
+# React Boilerplate
 
-Building a Youtube Clone with React and Redux
+This is a basic setup of a react project
