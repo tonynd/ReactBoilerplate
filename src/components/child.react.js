@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from "react-redux";
+import { Link } from 'react-router'; 
+import Display from './display.react';
 import * as actions from "../actions/add_person.action";
 //import Axios from 'axios';
 
@@ -13,6 +15,11 @@ export default class Child extends Component {
 			userQuote:""
 		};
 	}
+
+	static contextTypes = {
+		// you should only use context when you are doing something with react-router and routing
+		router: PropTypes.object
+	};
 
 	_handleChange = (event) => {
 		let obj = {};
@@ -30,10 +37,13 @@ export default class Child extends Component {
 	};*/
 
 	_handleClick = () => {
+		//this.context.router.push("/display");
 		this.props.grab_data(this.state);
 		this.state.userName = "";
 		this.state.userAddress = "";
 		this.state.userQuote = "";
+		this.context.router.push("/display");
+		//this.context.router.push("/display");
 	}
 
 	render() {

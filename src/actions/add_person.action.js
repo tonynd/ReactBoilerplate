@@ -16,8 +16,16 @@ export function grab_data(obj) {
 	};
 }
 
-export function delete_person(obj) {
-	const request = Axios.delete(SAMPLE_API, obj);
+export function grab_data2() {
+	const request = Axios.get(SAMPLE_API);
+	return {
+
+	};
+}
+
+export function delete_person(userID) {
+	console.log(userID);
+	const request = Axios.delete(SAMPLE_API+userID);
 	return {
 		type: DELETE,
 		payload: request

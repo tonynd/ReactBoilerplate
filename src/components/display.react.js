@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 //import Axios from 'axios';
 import { connect } from "react-redux";
 import Contact from './contact.react'
@@ -14,9 +15,19 @@ export default class Display extends Component {
 		}
 	}
 
-	_handleClick = () => {
-		this.props.delete_person(this.state);
-	}
+	static contextTypes = {
+		router: PropTypes.object
+	};
+
+	_handleRemoveClick = () => {
+		this.props.delete_person(event.target.id);
+		this.props.grab_data2();
+		//this.context.router.push("/display");
+	};
+
+	_handleBackClick = () => {
+		this.context.router.push("/");
+	};
 
 	render() {
 		if (this.props.data instanceof Array){
@@ -32,12 +43,14 @@ export default class Display extends Component {
 						<td>
 							"{entry.userQuote}"
 						</td>
-						{/*<td>
+						<td>
 							<button
+								type="button"
 								className="btn btn-danger btn-xs" 
-								onClick={this._handleClick}>Delete
+								id={entry._id}
+								onClick={this._handleRemoveClick}>Remove
 							</button>
-						</td>*/}
+						</td>
 					</tr>
 				);
 			})
@@ -45,30 +58,36 @@ export default class Display extends Component {
 
 		if (this.props.data instanceof Array){
 			return (
-				<table className="table table-striped table-bordered">
-					<thead>
-					<tr>
-						<th>
-							Name
-						</th>
-						<th>
-							Address
-						</th>
-						<th>
-							Favorite Quote
-						</th>
-					</tr>
-					</thead>
-					<tbody>
-						{v}
-					</tbody>
-				</table>
+				<div>
+					<table className="table table-striped table-bordered">
+						<thead>
+						<tr>
+							<th>
+								Name
+							</th>
+							<th>
+								Address
+							</th>
+							<th>
+								Favorite Quote
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+							{v}
+						</tbody>
+					</table>
+					<button className="btn btn-primary btn-xs" onClick={this._handleBackClick}>Back</button>
+				</div>
 		);
 		}
 
 		else{
 			return (
-				<table/>
+				<div>
+					<h4>No data.</h4>
+					<button className="btn btn-primary btn-xs" onClick={this._handleBackClick}>Back</button>
+				</div>
 			);
 		}
 	}

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import Child from './child.react';
 import Display from './display.react';
+let backFlag = 0;
 
 export default class App extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,6 +21,16 @@ export default class App extends Component {
 			});
 	}*/
 
+	_setBackFlag = () => {
+		if (backFlag === 0){
+			backFlag = 1;
+		}
+
+		else {
+			backFlag = 0;
+		}
+	};
+
 	_callback = (obj) => {
 		this.setState({
 			personList: obj
@@ -30,9 +40,12 @@ export default class App extends Component {
 	render() {
 		return (
 			<div className="app">
-				{this.state.response}
-				<Child callback = {this._callback}/>
-				<Display personList = {this.state.personList}/>
+				{/*{this.state.response}
+				<Child callback = {this._callback}/>*/}
+				{this.props.children}
+				{/*if (backFlag === 1) {
+					<Display personList = {this.state.personList}/>
+				}*/}
 			</div>
 		);
 	}

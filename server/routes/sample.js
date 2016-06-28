@@ -9,9 +9,15 @@ var id = 0;
 // use req.query -> this would print {q: "hi"}
 
 router.get('/', (req, res) => {
-  res.send({   
-    response: storage
-  });
+  userSchema.find({}, 'userName userAddress userQuote',
+      function(err, infos){
+        if (err){
+          throw err;
+        }
+        res.send({
+            response: infos
+        });
+    });
 });
 
 router.post('/', (req, res) => {
@@ -44,23 +50,29 @@ router.put('/', (req, res) => {
   });
 });
 
-router.delete('/', (req, res) => {
-  let deleteUser = new userSchema();
-  deleteUser.findByIdAndRemove(req.body.id, function(err) {
+router.delete('/:id', (req, res) => {
+  let id = req.params.id;
+  console.log(id);
+  userSchema.remove({"_id": id}, function(err, infos) {
     if (err){
       throw err;
     }
     console.log("User's info removed from db");
-    deleteUser.find({}, 'userName userAddress userQuote',
+
+    res.send({
+      response: infos
+    });
+    {/*userSchema.find({}, 'userName userAddress userQuote',
       function(err, infos){
         if (err){
           throw err;
         }
 
+        console.log
         res.send({
           response: infos
         });
-      });
+      });*/}
   });
 });
 

@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Router, hashHistory } from 'react-router';
+import { Router, hashHistory, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxPromise from 'redux-promise';
